@@ -1,0 +1,73 @@
+/* Mar Limpo 3.0 — movimento. Tudo aqui é opcional: prefers-reduced-motion desliga o que não é essencial. */
+
+/* Revelação ao rolar (só quando o JS está ativo: sem JS o conteúdo fica visível) */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.js .reveal.is-in{opacity:1;transform:none}
+.js .evidence-grid .reveal:nth-child(2){transition-delay:.12s}
+.js .evidence-grid .reveal:nth-child(3){transition-delay:.24s}
+.js .stagger>*{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.js .stagger.is-in>*{opacity:1;transform:none}
+.js .stagger.is-in>*:nth-child(2){transition-delay:.08s}.js .stagger.is-in>*:nth-child(3){transition-delay:.16s}
+.js .stagger.is-in>*:nth-child(4){transition-delay:.24s}.js .stagger.is-in>*:nth-child(5){transition-delay:.32s}
+
+/* Hero: partículas em canvas + maré de participação + parallax do cursor */
+.hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.ocean-disc{--level:.2;transform:translate3d(calc(var(--px,0)*12px),calc(var(--py,0)*12px),0);transition:transform .4s ease-out}
+.orbit-one{translate:calc(var(--px,0)*-18px) calc(var(--py,0)*-8px);transition:translate .5s ease-out}
+.orbit-two{translate:calc(var(--px,0)*10px) calc(var(--py,0)*14px);transition:translate .5s ease-out}
+.scan-tag{translate:calc(var(--px,0)*-8px) calc(var(--py,0)*-8px);transition:translate .5s ease-out}
+.wave-back{top:calc(60% - var(--level)*30%);transition:top 2.2s cubic-bezier(.3,.7,.2,1)}
+.wave-mid{top:calc(70% - var(--level)*30%);transition:top 2.2s cubic-bezier(.3,.7,.2,1)}
+.wave-front{top:calc(80% - var(--level)*30%);transition:top 2.2s cubic-bezier(.3,.7,.2,1)}
+.floating-ring{animation:bob 5s ease-in-out infinite}
+.current-path{animation:dash 6s linear infinite}
+.route-mini i{animation:nudge 2s ease-in-out infinite}
+
+/* Microinterações */
+.button:active,.chip:active,.amount:active,.quiz-opt:active{transform:scale(.97)}
+.button span[aria-hidden]{display:inline-block;transition:transform .25s}
+.button:hover span[aria-hidden]{transform:translate(3px,-3px)}
+.evidence-side,.pledge-card,.chart-card,.about-grid article{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.evidence-side:hover,.chart-card:hover,.about-grid article:hover{transform:translateY(-4px)}
+.status-pill i{animation:pulse 2s infinite}
+.pledge-card{animation:cardIn .7s cubic-bezier(.2,.8,.2,1)}
+.uf-pulse{animation:ufPulse 1.8s ease-out infinite}
+.map-connector{animation:dash 1.4s linear infinite}
+.ach.is-new{animation:badgePop .8s cubic-bezier(.2,1.4,.4,1)}
+
+/* Simulação: onda atravessando a interface, gotas caindo e revelação do recibo */
+.sim-stage.is-running .sim-water{animation:simRise 4.2s cubic-bezier(.45,.1,.3,1) forwards}
+.sim-water{transform:translateY(100%)}
+.sim-wave{animation:waveSlide 5s linear infinite}
+.sim-wave.w2{animation-duration:3.4s;animation-direction:reverse}
+.sim-particles i{animation:particle var(--t,2.6s) ease-in var(--d,0s) forwards}
+.receipt{animation:receiptIn .9s cubic-bezier(.2,.9,.3,1)}
+.sim-body{animation:fadeUp .5s ease}
+
+@keyframes pulse{50%{opacity:.45;box-shadow:0 0 5px var(--acid)}}
+@keyframes wave{0%,100%{translate:0 0}50%{translate:0 -13px}}
+@keyframes bob{50%{transform:translate(-50%,calc(-50% - 8px))}}
+@keyframes dash{to{stroke-dashoffset:-24}}
+@keyframes nudge{50%{transform:translateX(4px)}}
+@keyframes dropIn{from{opacity:0;transform:translateY(-14px) scale(.6)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.98)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}}
+@keyframes ufPulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.18);opacity:0}}
+@keyframes badgePop{0%{transform:scale(.7)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes simRise{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes waveSlide{to{transform:translateX(-50%)}}
+@keyframes particle{0%{opacity:0;transform:translateY(0)}15%{opacity:1}100%{opacity:0;transform:translateY(340px)}}
+@keyframes receiptIn{from{opacity:0;transform:translateY(40px) rotate(-1.5deg)}}
+
+/* Respeita quem prefere menos movimento: sem parallax, ondas paradas, transições quase instantâneas */
+@media (prefers-reduced-motion:reduce){
+  .js .reveal,.js .stagger>*{opacity:1;transform:none;transition:none}
+  .hero-canvas{display:none}
+  .ocean-disc,.orbit-one,.orbit-two,.scan-tag{transform:none;translate:none}
+  .wave,.floating-ring,.current-path,.route-mini i,.uf-pulse,.map-connector,.sim-wave,.status-pill i,.live-dot{animation:none!important}
+  .sim-particles{display:none}
+  .sim-water{transform:translateY(40%)}
+  .j-item{transition:none}
+  .spark .line{transition:none;stroke-dashoffset:0}
+  .hbar-track i,.col i,.progress i,.split-bar i{transition:none}
+}
